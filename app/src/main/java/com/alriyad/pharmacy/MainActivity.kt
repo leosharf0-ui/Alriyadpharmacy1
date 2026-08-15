@@ -33,7 +33,7 @@ private val DarkBlue = Color(0xFF0D47A1)
 private val LightBlue = Color(0xFFE3F2FD)
 private val Bg = Color(0xFFF7FAFD)
 
-private data class Product(val id:Int,val name:String,val ingredient:String,val category:String,val price:String,val description:String)
+ data class Product(val id:Int,val name:String,val ingredient:String,val category:String,val price:String,val description:String)
 private val products = listOf(
     Product(1,"Panadol Extra","Paracetamol + Caffeine","الأدوية","45 ج.م","مسكن للألم وخافض للحرارة."),
     Product(2,"Augmentin 1g","Amoxicillin + Clavulanic Acid","الأدوية","180 ج.م","مضاد حيوي يُستخدم حسب وصف الطبيب."),
