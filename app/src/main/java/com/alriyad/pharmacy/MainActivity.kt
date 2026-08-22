@@ -102,12 +102,197 @@ class MainActivity: ComponentActivity(){
 
 @Composable fun SearchScreen(query:String,onQuery:(String)->Unit,onProduct:(Product)->Unit){ Column{TopBar("البحث") { }; Column(Modifier.padding(18.dp)){SearchBox(query,onQuery,{});Spacer(Modifier.height(14.dp));val list=products.filter{it.name.contains(query,true)||it.ingredient.contains(query,true)||it.category.contains(query,true)};LazyColumn{items(list){ProductCard(it,onProduct,{})}}}} }
 @Composable fun ProductScreen(p:Product,onAdd:(Product)->Unit,onBack:()->Unit){ Column{TopBar("تفاصيل المنتج",onBack);Column(Modifier.padding(20.dp)){Box(Modifier.fillMaxWidth().height(220.dp).clip(RoundedCornerShape(24.dp)).background(LightBlue),contentAlignment=Alignment.Center){Icon(Icons.Default.Medication,null,tint=Blue,modifier=Modifier.size(110.dp))};Spacer(Modifier.height(20.dp));Text(p.name,fontSize=27.sp,fontWeight=FontWeight.Bold,color=DarkBlue);Text(p.ingredient,color=Color.Gray);Text(p.price,color=Blue,fontSize=21.sp,fontWeight=FontWeight.Bold,modifier=Modifier.padding(vertical=12.dp));Text(p.description,fontSize=16.sp);Spacer(Modifier.height(24.dp));Button({onAdd(p)},Modifier.fillMaxWidth(),shape=RoundedCornerShape(16.dp)){Icon(Icons.Default.AddShoppingCart,null);Spacer(Modifier.width(8.dp));Text("أضف للطلب")};Spacer(Modifier.height(10.dp));Text("تنبيه: الأدوية الموصوفة تُصرف وفق وصفة الطبيب.",color=Color.Gray,fontSize=12.sp)}} }
-@Composable fun TopBar(title:String,onBack:(()->Unit)?=null){Row(Modifier.fillMaxWidth().background(Blue).padding(10.dp),verticalAlignment=Alignment.CenterVertically){if(onBack!=null)IconButton(onClick=onBack){Icon(Icons.AutoMirrored.Filled.ArrowBack,null,tint=Color.White)};Text(title,color=Color.White,fontSize=20.sp,fontWeight=FontWeight.Bold,modifier=Modifier.padding(8.dp))}}
-
-@Composable fun ContactScreen(call1:()->Unit,call2:()->Unit,wa:()->Unit){ Column{Header();LazyColumn(Modifier.padding(18.dp)){item{Text("تواصل معنا",fontSize=28.sp,fontWeight=FontWeight.Bold,color=DarkBlue);Text("صيدلية الرياض - مركز الرياض أسفل المسجد الكبير",color=Color.Gray,modifier=Modifier.padding(vertical=8.dp));Spacer(Modifier.height(15.dp))};item{ContactButton("01040750032","اتصال بالرقم الرئيسي",Icons.Default.Phone,call1)};item{ContactButton("01035650029","اتصال بالرقم الثاني",Icons.Default.Phone,call2)};item{ContactButton("واتساب 01040750032","تواصل عبر واتساب",Icons.Default.Chat,wa)};item{Card(Modifier.fillMaxWidth().padding(top=12.dp),shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=LightBlue)){Row(Modifier.padding(18.dp)){Icon(Icons.Default.LocationOn,null,tint=Blue);Spacer(Modifier.width(12.dp));Column{Text("العنوان",fontWeight=FontWeight.Bold,color=DarkBlue);Text("مركز الرياض – أسفل المسجد الكبير")}}}};item{Spacer(Modifier.height(30.dp));Text("لا يوجد خط ساخن",color=Color.Gray,fontSize=12.sp)}}} }
-@Composable fun ContactButton(title:String,sub:String,icon:androidx.compose.ui.graphics.vector.ImageVector,action:()->Unit){Card(Modifier.fillMaxWidth().padding(vertical=6.dp).clickable{action()},shape=RoundedCornerShape(18.dp)){Row(Modifier.padding(16.dp),verticalAlignment=Alignment.CenterVertically){Icon(icon,null,tint=Blue,modifier=Modifier.size(28.dp));Spacer(Modifier.width(12.dp));Column{Text(title,fontWeight=FontWeight.Bold);Text(sub,color=Color.Gray,fontSize=12.sp)}}}}
 @Composable
-fun FloatingCart(count: Int, action: () -> Unit) {
+fun TopBar(
+    title: String,
+    onBack: (() -> Unit)? = null
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Blue)
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "رجوع",
+                    tint = Color.White
+                )
+            }
+        }
+
+        Text(
+            text = title,
+            color = Color.White,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+
+@Composable
+fun ContactScreen(
+    call1: () -> Unit,
+    call2: () -> Unit,
+    wa: () -> Unit
+) {
+    Column {
+        Header()
+
+        LazyColumn(
+            modifier = Modifier.padding(18.dp)
+        ) {
+
+            item {
+                Text(
+                    "تواصل معنا",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkBlue
+                )
+
+                Text(
+                    "صيدلية الرياض - مركز الرياض أسفل المسجد الكبير",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+            }
+
+            item {
+                ContactButton(
+                    "01040750032",
+                    "اتصال بالرقم الرئيسي",
+                    Icons.Default.Phone,
+                    call1
+                )
+            }
+
+            item {
+                ContactButton(
+                    "01035650029",
+                    "اتصال بالرقم الثاني",
+                    Icons.Default.Phone,
+                    call2
+                )
+            }
+
+            item {
+                ContactButton(
+                    "واتساب 01040750032",
+                    "تواصل عبر واتساب",
+                    Icons.Default.Chat,
+                    wa
+                )
+            }
+
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = LightBlue
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(18.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.LocationOn,
+                            contentDescription = null,
+                            tint = Blue
+                        )
+
+                        Spacer(modifier = Modifier.width(12.dp))
+
+                        Column {
+                            Text(
+                                "العنوان",
+                                fontWeight = FontWeight.Bold,
+                                color = DarkBlue
+                            )
+
+                            Text(
+                                "مركز الرياض – أسفل المسجد الكبير"
+                            )
+                        }
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Text(
+                    "لا يوجد خط ساخن",
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ContactButton(
+    title: String,
+    sub: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    action: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp)
+            .clickable {
+                action()
+            },
+        shape = RoundedCornerShape(18.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = Blue,
+                modifier = Modifier.size(28.dp)
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column {
+                Text(
+                    title,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    sub,
+                    color = Color.Gray,
+                    fontSize = 12.sp
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun FloatingCart(
+    count: Int,
+    action: () -> Unit
+) {
     FloatingActionButton(
         onClick = action,
         containerColor = Blue,
@@ -116,13 +301,58 @@ fun FloatingCart(count: Int, action: () -> Unit) {
     ) {
         BadgedBox(
             badge = {
-                Badge {
-                    Text(count.toString())
+                if (count > 0) {
+                    Badge {
+                        Text(count.toString())
+                    }
                 }
             }
         ) {
-            Icon(Icons.Default.ShoppingCart, contentDescription = null)
+            Icon(
+                Icons.Default.ShoppingCart,
+                contentDescription = "السلة"
+            )
         }
     }
 }
+
+
+@Composable
+fun BottomNav(
+    selected: Int,
+    onSelect: (Int) -> Unit
+) {
+    NavigationBar(
+        containerColor = Color.White
+    ) {
+
+        listOf(
+            Icons.Default.Home to "الرئيسية",
+            Icons.Default.Category to "الأقسام",
+            Icons.Default.Search to "البحث",
+            Icons.Default.ContactPhone to "تواصل"
+        ).forEachIndexed { index, item ->
+
+            val (icon, label) = item
+
+            NavigationBarItem(
+                selected = selected == index,
+                onClick = {
+                    onSelect(index)
+                },
+                icon = {
+                    Icon(
+                        icon,
+                        contentDescription = label
+                    )
+                },
+                label = {
+                    Text(
+                        label,
+                        fontSize = 10.sp
+                    )
+                }
+            )
+        }
+    }
 }
