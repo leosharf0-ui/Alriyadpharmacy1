@@ -104,9 +104,25 @@ class MainActivity: ComponentActivity(){
 @Composable fun ProductScreen(p:Product,onAdd:(Product)->Unit,onBack:()->Unit){ Column{TopBar("تفاصيل المنتج",onBack);Column(Modifier.padding(20.dp)){Box(Modifier.fillMaxWidth().height(220.dp).clip(RoundedCornerShape(24.dp)).background(LightBlue),contentAlignment=Alignment.Center){Icon(Icons.Default.Medication,null,tint=Blue,modifier=Modifier.size(110.dp))};Spacer(Modifier.height(20.dp));Text(p.name,fontSize=27.sp,fontWeight=FontWeight.Bold,color=DarkBlue);Text(p.ingredient,color=Color.Gray);Text(p.price,color=Blue,fontSize=21.sp,fontWeight=FontWeight.Bold,modifier=Modifier.padding(vertical=12.dp));Text(p.description,fontSize=16.sp);Spacer(Modifier.height(24.dp));Button({onAdd(p)},Modifier.fillMaxWidth(),shape=RoundedCornerShape(16.dp)){Icon(Icons.Default.AddShoppingCart,null);Spacer(Modifier.width(8.dp));Text("أضف للطلب")};Spacer(Modifier.height(10.dp));Text("تنبيه: الأدوية الموصوفة تُصرف وفق وصفة الطبيب.",color=Color.Gray,fontSize=12.sp)}} }
 @Composable fun TopBar(title:String,onBack:(()->Unit)?=null){Row(Modifier.fillMaxWidth().background(Blue).padding(10.dp),verticalAlignment=Alignment.CenterVertically){if(onBack!=null)IconButton(onClick=onBack){Icon(Icons.AutoMirrored.Filled.ArrowBack,null,tint=Color.White)};Text(title,color=Color.White,fontSize=20.sp,fontWeight=FontWeight.Bold,modifier=Modifier.padding(8.dp))}}
 
-@Composable fun ContactScreen(call1:()->Unit,call2:()->Unit,wa:()->Unit){ Column{Header();LazyColumn(Modifier.padding(18.dp)){item{Text("تواصل معنا",fontSize=28.sp,fontWeight=FontWeight.Bold,color=DarkBlue);Text("صيدلية الرياض - مركز الرياض أسفل المسجد الكبير",color=Color.Gray,modifier=Modifier.padding(vertical=8.dp));Spacer(Modifier.height(15.dp))};item{ContactButton("01040750032","اتصال بالرقم الرئيسي",Icons.Default.Phone,call1)};item{ContactButton("01035650029","اتصال بالرقم الثاني",Icons.Default.Phone,call2)};item{ContactButton("واتساب 01040750032","تواصل عبر واتساب",Icons.Default.WhatsApp,wa)};item{Card(Modifier.fillMaxWidth().padding(top=12.dp),shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=LightBlue)){Row(Modifier.padding(18.dp)){Icon(Icons.Default.LocationOn,null,tint=Blue);Spacer(Modifier.width(12.dp));Column{Text("العنوان",fontWeight=FontWeight.Bold,color=DarkBlue);Text("مركز الرياض – أسفل المسجد الكبير")}}}};item{Spacer(Modifier.height(30.dp));Text("لا يوجد خط ساخن",color=Color.Gray,fontSize=12.sp)}}} }
+@Composable fun ContactScreen(call1:()->Unit,call2:()->Unit,wa:()->Unit){ Column{Header();LazyColumn(Modifier.padding(18.dp)){item{Text("تواصل معنا",fontSize=28.sp,fontWeight=FontWeight.Bold,color=DarkBlue);Text("صيدلية الرياض - مركز الرياض أسفل المسجد الكبير",color=Color.Gray,modifier=Modifier.padding(vertical=8.dp));Spacer(Modifier.height(15.dp))};item{ContactButton("01040750032","اتصال بالرقم الرئيسي",Icons.Default.Phone,call1)};item{ContactButton("01035650029","اتصال بالرقم الثاني",Icons.Default.Phone,call2)};item{ContactButton("واتساب 01040750032","تواصل عبر واتساب",Icons.Default.Chat,wa)}item{Card(Modifier.fillMaxWidth().padding(top=12.dp),shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=LightBlue)){Row(Modifier.padding(18.dp)){Icon(Icons.Default.LocationOn,null,tint=Blue);Spacer(Modifier.width(12.dp));Column{Text("العنوان",fontWeight=FontWeight.Bold,color=DarkBlue);Text("مركز الرياض – أسفل المسجد الكبير")}}}};item{Spacer(Modifier.height(30.dp));Text("لا يوجد خط ساخن",color=Color.Gray,fontSize=12.sp)}}} }
 @Composable fun ContactButton(title:String,sub:String,icon:androidx.compose.ui.graphics.vector.ImageVector,action:()->Unit){Card(Modifier.fillMaxWidth().padding(vertical=6.dp).clickable{action()},shape=RoundedCornerShape(18.dp)){Row(Modifier.padding(16.dp),verticalAlignment=Alignment.CenterVertically){Icon(icon,null,tint=Blue,modifier=Modifier.size(28.dp));Spacer(Modifier.width(12.dp));Column{Text(title,fontWeight=FontWeight.Bold);Text(sub,color=Color.Gray,fontSize=12.sp)}}}}
-
-@Composable fun FloatingCart(count:Int,action:()->Unit){FloatingActionButton(onClick=action,containerColor=Blue,contentColor=Color.White,modifier=Modifier.padding(18.dp).wrapContentSize().align(Alignment.BottomEnd)){BadgedBox(badge={Badge{Text(count.toString())}}){Icon(Icons.Default.ShoppingCart,null)}}}
-@Composable fun BottomNav(selected:Int,onSelect:(Int)->Unit){NavigationBar(containerColor=Color.White){listOf(Icons.Default.Home to "الرئيسية",Icons.Default.Category to "الأقسام",Icons.Default.Search to "البحث",Icons.Default.ContactPhone to "تواصل").forEachIndexed{i,(icon,label)->NavigationBarItem(selected==i,onClick={onSelect(i)},icon={Icon(icon,null)},label={Text(label,fontSize=10.sp)})}}
+@Composable
+fun FloatingCart(count: Int, action: () -> Unit) {
+    FloatingActionButton(
+        onClick = action,
+        containerColor = Blue,
+        contentColor = Color.White,
+        modifier = Modifier.padding(18.dp)
+    ) {
+        BadgedBox(
+            badge = {
+                Badge {
+                    Text(count.toString())
+                }
+            }
+        ) {
+            Icon(Icons.Default.ShoppingCart, contentDescription = null)
+        }
+    }
+}
 }
